@@ -8,9 +8,13 @@ class ticTacToe {
     private int raz;
     public char[][] field;
     public ticTacToe(Integer r) {
-        raz = r;
-        if (raz < 1) throw new IllegalArgumentException();
-        field = new char[raz][raz];
+        try {
+            raz = r;
+            if (raz < 1) throw new Exception("Размер поля не может быть меньше одного!");
+            field = new char[raz][raz];
+        }catch (Exception ex){
+            System.out.println(ex.getMessage());
+        }
     }
     public void inField() {
         for (int i = 0;i < raz;i++) {
@@ -20,19 +24,37 @@ class ticTacToe {
         }
     }
 
-    public void putK(Integer x, Integer y) {
-        field[x][y] = k;
-    }
-
     @Override
     public String toString() {
-        return "ticTacToe{" +
-                "field=" + Arrays.toString(field) +
-                '}';
+        String str1 = "|";
+        String str2 = new String();
+        for (int i = 0;i < raz;i++) {
+            for (int j = 0; j < raz; j++) {
+                str2 = str2.concat(String.format(" %c |", field[i][j]));
+            }
+            str1 = str1.concat(str2);
+            if (i + 1 < raz) str1 = str1.concat(String.format("%n|"));
+            str2 = "";
+        }
+        return str1;
+    }
+
+    public void putK(Integer x, Integer y) {
+            try {
+                if (field[x][y] != empty) throw new Exception("Клетка уже занята!");
+            field[x][y] = k;
+        }catch (Exception ex){
+            System.out.println(ex.getMessage());
+        }
     }
 
     public void putO(Integer x, Integer y) {
-        field[x][y] = o;
+        try {
+            if (field[x][y] != empty) throw new Exception("Клетка уже занята!");
+            field[x][y] = o;
+        }catch (Exception ex){
+            System.out.println(ex.getMessage());
+        }
     }
     public void clear(Integer x, Integer y) {
         field[x][y] = empty;

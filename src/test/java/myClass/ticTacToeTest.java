@@ -37,13 +37,21 @@ class ticTacToeTest {
         };
         main.inField();
         assertArrayEquals(result3, main.field);
+
+        main = new ticTacToe(0);
+        assertNull(main.field);
     }
 
     @org.junit.jupiter.api.Test
-    void printField() {
+    void PrintField() {
         ticTacToe main = new ticTacToe(3);
         main.inField();
-        assertEquals(" ", main.toString());
+        main.putK(0, 0);
+        main.putO(0, 1);
+        main.putK(1, 0);
+        assertEquals("| x | o |   |\n" +
+                "| x |   |   |\n" +
+                "|   |   |   |", main.toString());
     }
 
     @org.junit.jupiter.api.Test
@@ -57,6 +65,12 @@ class ticTacToeTest {
         main.inField();
         main.putK(4, 4);
         assertEquals('x', main.field[4][4]);
+
+        main = new ticTacToe(2);
+        main.inField();
+        main.putO(0, 0);
+        main.putK(0, 0);
+        assertEquals('o', main.field[0][0]);
     }
 
     @org.junit.jupiter.api.Test
@@ -70,6 +84,12 @@ class ticTacToeTest {
         main.inField();
         main.putO(0, 1);
         assertEquals('o', main.field[0][1]);
+
+        main = new ticTacToe(2);
+        main.inField();
+        main.putK(1, 1);
+        main.putO(1, 1);
+        assertEquals('x', main.field[1][1]);
     }
 
     @org.junit.jupiter.api.Test
@@ -100,7 +120,6 @@ class ticTacToeTest {
         main.putK(3, 2);
         main.putK(2, 3);
         main.putK(1, 4);
-        main.putK(4, 3);
         main.putK(4, 3);
         List<String> result2 = new LinkedList<String>();
         result2.add("4;1");
