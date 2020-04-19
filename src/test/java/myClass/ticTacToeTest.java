@@ -1,7 +1,5 @@
 package myClass;
 
-import org.junit.jupiter.api.Test;
-
 import java.util.LinkedList;
 import java.util.List;
 
@@ -22,8 +20,8 @@ class ticTacToeTest {
 
         main = new ticTacToe(2);
         char[][] result2 = {
-                {' ',' '},
-                {' ',' '}
+                {' ', ' '},
+                {' ', ' '}
         };
         main.inField();
         assertArrayEquals(result2, main.field);
@@ -49,9 +47,28 @@ class ticTacToeTest {
         main.putK(0, 0);
         main.putO(0, 1);
         main.putK(1, 0);
-        assertEquals("| x | o |   |\n" +
-                "| x |   |   |\n" +
-                "|   |   |   |", main.toString());
+        String result1 = "| x | o |   |\n| x |   |   |\n|   |   |   |";
+        assertEquals(result1, main.printField());
+
+        main = new ticTacToe(2);
+        main.inField();
+        String result2 = "|   |   |\n|   |   |";
+        assertEquals(result2, main.printField());
+
+        main = new ticTacToe(4);
+        main.inField();
+        main.putK(0, 0);
+        main.putO(0, 1);
+        main.putK(0, 2);
+        main.putO(0, 3);
+        main.putK(1, 0);
+        main.putO(2, 2);
+        main.putK(3, 0);
+        main.putK(3, 1);
+        main.putK(3, 2);
+        main.putK(3, 3);
+        String result3 = "| x | o | x | o |\n| x |   |   |   |\n|   |   | o |   |\n| x | x | x | x |";
+        assertEquals(result3, main.printField());
     }
 
     @org.junit.jupiter.api.Test
@@ -108,7 +125,7 @@ class ticTacToeTest {
         main.putK(0, 0);
         main.putK(0, 1);
         main.putK(0, 2);
-        List<String> result1 = new LinkedList<String>();
+        List<String> result1 = new LinkedList<>();
         result1.add("0;0");
         result1.add("0;1");
         result1.add("0;2");
@@ -121,12 +138,17 @@ class ticTacToeTest {
         main.putK(2, 3);
         main.putK(1, 4);
         main.putK(4, 3);
-        List<String> result2 = new LinkedList<String>();
+        List<String> result2 = new LinkedList<>();
         result2.add("4;1");
         result2.add("3;2");
         result2.add("2;3");
         result2.add("1;4");
         assertEquals(result2, main.findK());
+
+        main = new ticTacToe(3);
+        List<String> result3 = new LinkedList<>();
+        main.inField();
+        assertEquals(result3, main.findK());
     }
 
     @org.junit.jupiter.api.Test
@@ -139,7 +161,7 @@ class ticTacToeTest {
         main.putO(0, 2);
         main.putO(1, 2);
         main.putO(3, 2);
-        LinkedList<String> result1 = new LinkedList<String>();
+        LinkedList<String> result1 = new LinkedList<>();
         result1.add("0;2");
         result1.add("1;2");
         result1.add("2;2");
@@ -152,9 +174,14 @@ class ticTacToeTest {
         main.putO(1, 1);
         main.putK(1, 0);
         main.putK(0, 0);
-        LinkedList<String> result2 = new LinkedList<String>();
+        LinkedList<String> result2 = new LinkedList<>();
         result2.add("0;1");
         result2.add("1;1");
         assertEquals(result2, main.findO());
+
+        main = new ticTacToe(4);
+        List<String> result3 = new LinkedList<>();
+        main.inField();
+        assertEquals(result3, main.findO());
     }
 }

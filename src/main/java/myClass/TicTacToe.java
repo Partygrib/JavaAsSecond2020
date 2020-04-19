@@ -1,5 +1,5 @@
 package myClass;
-import java.lang.reflect.Array;
+
 import java.util.*;
 class ticTacToe {
     private final char empty = ' ';
@@ -10,7 +10,7 @@ class ticTacToe {
     public ticTacToe(Integer r) {
         try {
             raz = r;
-            if (raz < 1) throw new Exception("Размер поля не может быть меньше одного!");
+            if (raz < 1) throw new Exception("Размер поля не может быть меньше единицы!");
             field = new char[raz][raz];
         }catch (Exception ex){
             System.out.println(ex.getMessage());
@@ -24,16 +24,15 @@ class ticTacToe {
         }
     }
 
-    @Override
-    public String toString() {
+    public String printField() {
         String str1 = "|";
-        String str2 = new String();
-        for (int i = 0;i < raz;i++) {
+        String str2 = "";
+        for (int i = 0; i < raz; i++) {
             for (int j = 0; j < raz; j++) {
                 str2 = str2.concat(String.format(" %c |", field[i][j]));
             }
             str1 = str1.concat(str2);
-            if (i + 1 < raz) str1 = str1.concat(String.format("%n|"));
+            if (i + 1 < raz) str1 = str1.concat("\n|");
             str2 = "";
         }
         return str1;
@@ -61,9 +60,8 @@ class ticTacToe {
     }
     public List<String> findK() {
         int s;
-        List<String> list1 = new LinkedList<String>();
-        List<String> list2 = new LinkedList<String>();
-        s = 0;
+        List<String> list1 = new LinkedList<>();
+        List<String> list2 = new LinkedList<>();
         for (int i = 0;i < raz;i++) {
             for (int j = 0; j < raz; j++) {
                 if (field[i][j] == k)
@@ -180,13 +178,13 @@ class ticTacToe {
             }
             list1.clear();
         }
+        if (list2.isEmpty()) System.out.println("Крестиков на поле не обнаружено!");
         return list2;
     }
     public List<String> findO() {
         int s;
-        List<String> list1 = new LinkedList<String>();
-        List<String> list2 = new LinkedList<String>();
-        s = 0;
+        List<String> list1 = new LinkedList<>();
+        List<String> list2 = new LinkedList<>();
         for (int i = 0;i < raz;i++) {
             for (int j = 0; j < raz; j++) {
                 if (field[i][j] == o)
@@ -303,6 +301,7 @@ class ticTacToe {
             }
             list1.clear();
         }
+        if (list2.isEmpty()) System.out.println("Ноликов на поле не обнаружено!");
         return list2;
     }
 }
