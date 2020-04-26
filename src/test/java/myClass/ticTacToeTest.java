@@ -3,12 +3,12 @@ package myClass;
 import java.util.LinkedList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ticTacToeTest {
 
     @org.junit.jupiter.api.Test
-    void inField() throws Exception {
+    void inField() {
         ticTacToe main = new ticTacToe(3);
         char[][] result1 = {
                 {' ',' ',' '},
@@ -50,10 +50,22 @@ class ticTacToeTest {
 
         main = new ticTacToe(3);
         assertEquals("Ошибка!Такой клетки не существует!", main.getCell(5, 2));
+
+        try {
+            ticTacToe main1 = new ticTacToe(0);
+        } catch (IllegalArgumentException ex) {
+            System.out.println("Размер поля не может быть меньше единицы!");
+        }
+
+        try {
+            ticTacToe main2 = new ticTacToe(-2);
+        } catch (IllegalArgumentException ex) {
+            System.out.println("Размер поля не может быть меньше единицы!");
+        }
     }
 
     @org.junit.jupiter.api.Test
-    void testToString() throws Exception {
+    void testToString() {
         ticTacToe main = new ticTacToe(3);
         main.inField();
         main.putK(0, 0);
@@ -86,7 +98,7 @@ class ticTacToeTest {
     }
 
     @org.junit.jupiter.api.Test
-    void putK() throws Exception {
+    void putK() {
         ticTacToe main = new ticTacToe(3);
         main.inField();
         assertEquals("Успешно!", main.putK(1, 2));
@@ -109,7 +121,7 @@ class ticTacToeTest {
     }
 
     @org.junit.jupiter.api.Test
-    void putO() throws Exception {
+    void putO() {
         ticTacToe main = new ticTacToe(4);
         main.inField();
         assertEquals("Успешно!", main.putO(3, 3));
@@ -132,7 +144,7 @@ class ticTacToeTest {
     }
 
     @org.junit.jupiter.api.Test
-    void clear() throws Exception {
+    void clear() {
         ticTacToe main = new ticTacToe(5);
         main.inField();
         main.putO(0, 0);
@@ -142,7 +154,7 @@ class ticTacToeTest {
     }
 
     @org.junit.jupiter.api.Test
-    void findK() throws Exception {
+    void findK() {
         ticTacToe main = new ticTacToe(3);
         main.inField();
         main.putK(0, 0);
@@ -168,6 +180,21 @@ class ticTacToeTest {
         result2.add("1;4");
         assertEquals(result2, main.findK());
 
+        main = new ticTacToe(5);
+        main.inField();
+        main.putK(3, 0);
+        main.putK(2, 1);
+        main.putK(1, 2);
+        main.putK(0, 3);
+        main.putK(0, 0);
+        main.putK(0, 1);
+        List<String> result4 = new LinkedList<>();
+        result4.add("3;0");
+        result4.add("2;1");
+        result4.add("1;2");
+        result4.add("0;3");
+        assertEquals(result4, main.findK());
+
         main = new ticTacToe(3);
         List<String> result3 = new LinkedList<>();
         main.inField();
@@ -175,21 +202,32 @@ class ticTacToeTest {
     }
 
     @org.junit.jupiter.api.Test
-    void findO() throws Exception {
-        ticTacToe main = new ticTacToe(4);
+    void findO() {
+        ticTacToe main = new ticTacToe(5);
         main.inField();
-        main.putO(0, 0);
-        main.putO(1, 1);
-        main.putO(2, 2);
-        main.putO(0, 2);
-        main.putO(1, 2);
+        main.putO(1, 0);
+        main.putO(2, 1);
         main.putO(3, 2);
+        main.putO(4, 3);
         LinkedList<String> result1 = new LinkedList<>();
-        result1.add("0;2");
-        result1.add("1;2");
-        result1.add("2;2");
+        result1.add("1;0");
+        result1.add("2;1");
         result1.add("3;2");
+        result1.add("4;3");
         assertEquals(result1, main.findO());
+
+        main = new ticTacToe(5);
+        main.inField();
+        main.putO(0, 1);
+        main.putO(1, 2);
+        main.putO(2, 3);
+        main.putO(3, 4);
+        LinkedList<String> result4 = new LinkedList<>();
+        result4.add("0;1");
+        result4.add("1;2");
+        result4.add("2;3");
+        result4.add("3;4");
+        assertEquals(result4, main.findO());
 
         main = new ticTacToe(2);
         main.inField();
