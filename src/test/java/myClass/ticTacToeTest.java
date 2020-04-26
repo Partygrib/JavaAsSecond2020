@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class ticTacToeTest {
 
     @org.junit.jupiter.api.Test
-    void inField() {
+    void inField() throws Exception {
         ticTacToe main = new ticTacToe(3);
         char[][] result1 = {
                 {' ',' ',' '},
@@ -16,7 +16,11 @@ class ticTacToeTest {
                 {' ',' ',' '}
         };
         main.inField();
-        assertArrayEquals(result1, main.field);
+        for (int i = 0;i < 3;i++) {
+            for (int j = 0; j < 3; j++) {
+                assertEquals(result1[i][j], main.getCell(i, j));
+            }
+        }
 
         main = new ticTacToe(2);
         char[][] result2 = {
@@ -24,7 +28,11 @@ class ticTacToeTest {
                 {' ', ' '}
         };
         main.inField();
-        assertArrayEquals(result2, main.field);
+        for (int i = 0;i < 2;i++) {
+            for (int j = 0; j < 2; j++) {
+                assertEquals(result2[i][j], main.getCell(i, j));
+            }
+        }
 
         main = new ticTacToe(4);
         char[][] result3 = {
@@ -34,26 +42,31 @@ class ticTacToeTest {
                 {' ',' ',' ',' '}
         };
         main.inField();
-        assertArrayEquals(result3, main.field);
+        for (int i = 0;i < 4;i++) {
+            for (int j = 0; j < 4; j++) {
+                assertEquals(result3[i][j], main.getCell(i, j));
+            }
+        }
 
-        main = new ticTacToe(0);
-        assertNull(main.field);
+        main = new ticTacToe(3);
+        assertEquals("Ошибка!Такой клетки не существует!", main.getCell(5, 2));
     }
 
     @org.junit.jupiter.api.Test
-    void PrintField() {
+    void testToString() throws Exception {
         ticTacToe main = new ticTacToe(3);
         main.inField();
         main.putK(0, 0);
         main.putO(0, 1);
         main.putK(1, 0);
-        String result1 = "| x | o |   |\n| x |   |   |\n|   |   |   |";
-        assertEquals(result1, main.printField());
+        String result1 = "| x | o |   |" + System.lineSeparator() +
+                "| x |   |   |" + System.lineSeparator() + "|   |   |   |";
+        assertEquals(result1, main.toString());
 
         main = new ticTacToe(2);
         main.inField();
-        String result2 = "|   |   |\n|   |   |";
-        assertEquals(result2, main.printField());
+        String result2 = "|   |   |" + System.lineSeparator() + "|   |   |";
+        assertEquals(result2, main.toString());
 
         main = new ticTacToe(4);
         main.inField();
@@ -67,59 +80,69 @@ class ticTacToeTest {
         main.putK(3, 1);
         main.putK(3, 2);
         main.putK(3, 3);
-        String result3 = "| x | o | x | o |\n| x |   |   |   |\n|   |   | o |   |\n| x | x | x | x |";
-        assertEquals(result3, main.printField());
+        String result3 = "| x | o | x | o |" + System.lineSeparator() + "| x |   |   |   |" + System.lineSeparator()
+                + "|   |   | o |   |" + System.lineSeparator() + "| x | x | x | x |";
+        assertEquals(result3, main.toString());
     }
 
     @org.junit.jupiter.api.Test
-    void putK() {
+    void putK() throws Exception {
         ticTacToe main = new ticTacToe(3);
         main.inField();
-        main.putK(1, 2);
-        assertEquals('x', main.field[1][2]);
+        assertEquals("Успешно!", main.putK(1, 2));
+        assertEquals('x', main.getCell(1,2));
 
         main = new ticTacToe(5);
         main.inField();
-        main.putK(4, 4);
-        assertEquals('x', main.field[4][4]);
+        assertEquals("Успешно!", main.putK(4, 4));
+        assertEquals('x', main.getCell(4,4));
 
         main = new ticTacToe(2);
         main.inField();
         main.putO(0, 0);
-        main.putK(0, 0);
-        assertEquals('o', main.field[0][0]);
+        assertEquals("Ошибка!Клетка уже занята!", main.putK(0, 0));
+        assertEquals('o', main.getCell(0,0));
+
+        main = new ticTacToe(3);
+        main.inField();
+        assertEquals("Ошибка!Такой клетки не существует!", main.putK(4, 4));
     }
 
     @org.junit.jupiter.api.Test
-    void putO() {
+    void putO() throws Exception {
         ticTacToe main = new ticTacToe(4);
         main.inField();
-        main.putO(3, 3);
-        assertEquals('o', main.field[3][3]);
+        assertEquals("Успешно!", main.putO(3, 3));
+        assertEquals('o', main.getCell(3,3));
 
         main = new ticTacToe(2);
         main.inField();
-        main.putO(0, 1);
-        assertEquals('o', main.field[0][1]);
+        assertEquals("Успешно!", main.putO(0, 1));
+        assertEquals('o', main.getCell(0,1));
 
         main = new ticTacToe(2);
         main.inField();
         main.putK(1, 1);
-        main.putO(1, 1);
-        assertEquals('x', main.field[1][1]);
+        assertEquals("Ошибка!Клетка уже занята!", main.putO(1, 1));
+        assertEquals('x', main.getCell(1,1));
+
+        main = new ticTacToe(3);
+        main.inField();
+        assertEquals("Ошибка!Такой клетки не существует!", main.putO(3, 2));
     }
 
     @org.junit.jupiter.api.Test
-    void clear() {
+    void clear() throws Exception {
         ticTacToe main = new ticTacToe(5);
         main.inField();
         main.putO(0, 0);
         main.clear(0, 0);
-        assertEquals(' ', main.field[0][0]);
+        assertEquals(' ', main.getCell(0,0));
+        assertEquals("Ошибка!Такой клетки не существует!", main.clear(-2, 2));
     }
 
     @org.junit.jupiter.api.Test
-    void findK() {
+    void findK() throws Exception {
         ticTacToe main = new ticTacToe(3);
         main.inField();
         main.putK(0, 0);
@@ -152,7 +175,7 @@ class ticTacToeTest {
     }
 
     @org.junit.jupiter.api.Test
-    void findO() {
+    void findO() throws Exception {
         ticTacToe main = new ticTacToe(4);
         main.inField();
         main.putO(0, 0);
